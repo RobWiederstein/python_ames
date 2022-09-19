@@ -1,3 +1,6 @@
+# Author: Pedro Marcelino
+# Title: Comprehensive data exploration with Python
+# Url: https://www.kaggle.com/code/pmarcelino/comprehensive-data-exploration-with-python/notebook
 #invite people for the Kaggle party
 import inline as inline
 import pandas as pd
