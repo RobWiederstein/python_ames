@@ -7,7 +7,7 @@ import numpy as np
 from scipy.stats import norm
 from sklearn.preprocessing import StandardScaler
 from scipy import stats
-#add warnings
+
 import warnings
 warnings.filterwarnings('ignore')
 #%matplotlib inline
