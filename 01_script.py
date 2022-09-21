@@ -77,8 +77,27 @@ cols = ['SalePrice', 'Overall Qual', 'Gr Liv Area', 'Garage Cars', 'Total Bsmt S
 sns.pairplot(df_train[cols], size = 2.5)
 plt.show()
 
-#missing data
-total = df_train.isnull().sum().sort_values(ascending=False)
-percent = (df_train.isnull().sum()/df_train.isnull().count()).sort_values(ascending=False)
-missing_data = pd.concat([total, percent], axis=1, keys=['Total', 'Percent'])
+# missing data
+total = df_train.isnull().sum().sort_values(ascending = False)
+percent = (df_train.isnull().sum() / df_train.isnull().count()).sort_values(ascending = False)
+missing_data = pd.concat([total, percent], axis = 1, keys = ['Total', 'Percent'])
 missing_data.head(20)
+
+# dealing with missing data
+df_train = df_train.drop((missing_data[missing_data['Total'] > 1]).index, 1)
+df_train = df_train.drop(df_train.loc[df_train['Electrical'].isnull()].index)
+df_train.isnull().sum().max()  # just checking that there's no missing data missing...
+
+# standardizing data
+saleprice_scaled = StandardScaler().fit_transform(df_train['SalePrice'][:, np.newaxis]);
+low_range = saleprice_scaled[saleprice_scaled[:, 0].argsort()][:10]
+high_range = saleprice_scaled[saleprice_scaled[:, 0].argsort()][-10:]
+print('outer range (low) of the distribution:')
+print(low_range)
+print('\nouter range (high) of the distribution:')
+print(high_range)
+
+# bivariate analysis saleprice/grlivarea
+var = 'Gr Liv Area'
+data = pd.concat([df_train['SalePrice'], df_train[var]], axis = 1)
+data.plot.scatter(x = var, y = 'SalePrice', ylim = (0, 800000))
