@@ -101,3 +101,27 @@ print(high_range)
 var = 'Gr Liv Area'
 data = pd.concat([df_train['SalePrice'], df_train[var]], axis = 1)
 data.plot.scatter(x = var, y = 'SalePrice', ylim = (0, 800000))
+
+# deleting points
+df_train.sort_values(by = 'GrLivArea', ascending = False)[:2]
+df_train = df_train.drop(df_train[df_train['Id'] == 1299].index)
+df_train = df_train.drop(df_train[df_train['Id'] == 524].index)
+
+# bivariate analysis saleprice/grlivarea
+var = 'Total Bsmt SF'
+data = pd.concat([df_train['SalePrice'], df_train[var]], axis = 1)
+data.plot.scatter(x = var, y = 'SalePrice', ylim = (0, 800000))
+
+# histogram and normal probability plot
+sns.distplot(df_train['SalePrice'], fit = norm)
+fig = plt.figure()
+res = stats.probplot(df_train['SalePrice'], plot = plt)
+
+# applying log transformation
+df_train['SalePrice'] = np.log(df_train['SalePrice'])
+
+# transformed histogram and normal probability plot
+sns.distplot(df_train['SalePrice'], fit=norm);
+fig = plt.figure()
+res = stats.probplot(df_train['SalePrice'], plot=plt)
+
