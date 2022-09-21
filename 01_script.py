@@ -76,3 +76,9 @@ sns.set()
 cols = ['SalePrice', 'Overall Qual', 'Gr Liv Area', 'Garage Cars', 'Total Bsmt SF', 'Full Bath', 'Year Built']
 sns.pairplot(df_train[cols], size = 2.5)
 plt.show()
+
+#missing data
+total = df_train.isnull().sum().sort_values(ascending=False)
+percent = (df_train.isnull().sum()/df_train.isnull().count()).sort_values(ascending=False)
+missing_data = pd.concat([total, percent], axis=1, keys=['Total', 'Percent'])
+missing_data.head(20)
